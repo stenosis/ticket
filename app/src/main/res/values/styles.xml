@@ -1,0 +1,87 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat">
+        <!-- Customize your theme here. -->
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <!-- Make sure toolbar title is white -->
+        <item name="nnf_toolbarTheme">@style/SampleToolbarTheme</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!--<style name="SampleTheme" parent="NNF_BaseTheme">-->
+        <!--<item name="colorPrimary">@color/primary2</item>-->
+        <!--<item name="colorPrimaryDark">@color/primary_dark2</item>-->
+        <!--<item name="colorAccent">@color/accent2</item>-->
+        <!--<item name="alertDialogTheme">@style/SampleAlertDialogTheme</item>-->
+    <!--</style>-->
+
+    <style name="SampleTheme" parent="NNF_BaseTheme">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="alertDialogTheme">@style/SampleAlertDialogTheme</item>
+    </style>
+
+    <style name="SampleThemeLight" parent="NNF_BaseTheme.Light">
+        <item name="nnf_list_item_divider">?android:attr/listDivider</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="alertDialogTheme">@style/SampleAlertDialogThemeLight</item>
+        <!-- Make sure toolbar title is white -->
+        <item name="nnf_toolbarTheme">@style/SampleToolbarTheme</item>
+    </style>
+
+    <!--<style name="SampleAlertDialogTheme" parent="Theme.AppCompat.Dialog.Alert">-->
+        <!--<item name="colorPrimary">@color/primary2</item>-->
+        <!--<item name="colorPrimaryDark">@color/primary_dark2</item>-->
+        <!--<item name="colorAccent">@color/accent2</item>-->
+    <!--</style>-->
+
+    <style name="SampleAlertDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent2</item>
+    </style>
+
+    <style name="SampleAlertDialogThemeLight" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+    </style>
+
+    <style name="SampleToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">@android:color/white</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme2" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <!-- Make sure toolbar title is white -->
+        <item name="nnf_toolbarTheme">@style/SampleToolbarTheme</item>
+    </style>
+
+    <style name="FilePickerTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+</resources>

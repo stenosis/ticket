@@ -19,6 +19,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -56,7 +58,8 @@ public class MainActivity extends AppCompatActivity
     // Key values
     private final static int PAGE_NR = 0;                               // Pdf page to be rendered
     private final static int ZOOM_FACTOR = 3;                           // Zoom factor of the Pdf
-    private final static String MAIN_IMAGE_KEY = "main_image";          // Key value to save the main image
+    private final static String KEY_MAIN_IMAGE = "main_image";          // Key value to save the main image
+    private final static String KEY_FULLSCREEN_MODE = "fullscreen";     // Key value to save the fullscreen mode
     private final static String FILE_TICKET_IMAGE = "ticket.png";       // File name for the ticket image
     private final static String FILE_TICKET_PDF = "ticket.pdf";         // File name for the ticket Pdf
     private final static String FILE_PDF_MIME = "application/pdf";      // MIME type of a Pdf file
@@ -64,6 +67,7 @@ public class MainActivity extends AppCompatActivity
 
     // The main image to be displayed
     private Bitmap mainImage = null;
+    private boolean fullscreen = false;
 
     /**
      * The method onCreate gets called by entering the Ticket activity.
@@ -82,7 +86,7 @@ public class MainActivity extends AppCompatActivity
         if (doesFileExists(FILE_TICKET_IMAGE)) {
             receiveMainImageFromInternalStorage();
         } else if (savedInstanceState != null) {
-            this.mainImage = savedInstanceState.getParcelable(MAIN_IMAGE_KEY);
+            this.mainImage = savedInstanceState.getParcelable(KEY_MAIN_IMAGE);
             setFrontImage(this.mainImage);
         }
 
@@ -107,6 +111,7 @@ public class MainActivity extends AppCompatActivity
 
 //        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 //        navigationView.setNavigationItemSelectedListener(this);
+
     }
 
 
@@ -118,7 +123,8 @@ public class MainActivity extends AppCompatActivity
     public void onSaveInstanceState(Bundle toSave) {
         super.onSaveInstanceState(toSave);
         // We're going to save the main image of the session
-        if (this.mainImage != null) toSave.putParcelable(MAIN_IMAGE_KEY, this.mainImage);
+        if (this.mainImage != null) toSave.putParcelable(KEY_MAIN_IMAGE, this.mainImage);
+        toSave.putBoolean(KEY_FULLSCREEN_MODE, this.fullscreen);
     }
 
     /**
@@ -128,11 +134,16 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+
         // And also restoring the main image of the session
         if (this.mainImage == null) {
-            this.mainImage = savedInstanceState.getParcelable(MAIN_IMAGE_KEY);
+            this.mainImage = savedInstanceState.getParcelable(KEY_MAIN_IMAGE);
             if (this.mainImage != null) setFrontImage(this.mainImage);
         }
+
+        // Restores the fullscreen setting
+        this.fullscreen = savedInstanceState.getBoolean(KEY_FULLSCREEN_MODE);
+        setFullscreen(this.fullscreen);
     }
 
     /**
@@ -181,12 +192,9 @@ public class MainActivity extends AppCompatActivity
         builder.setView(view);
 
         Display display = getWindowManager().getDefaultDisplay();
-        int width = display.getWidth();
-        int height = display.getHeight();
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
-        alertDialog.getWindow().setLayout(width, (height - 320));
     }
 
     /**
@@ -312,6 +320,16 @@ public class MainActivity extends AppCompatActivity
             // Hide the information default text
             TextView txt = (TextView) findViewById(R.id.txt_choose_ticket);
             txt.setVisibility(View.INVISIBLE);
+
+
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    fullscreen = !fullscreen;
+                    setFullscreen(fullscreen);
+                }
+            });
 
             // Long time onclick listener for opening the original Pdf file
             image.setOnLongClickListener(new View.OnLongClickListener() {
@@ -582,6 +600,31 @@ public class MainActivity extends AppCompatActivity
 
             e.printStackTrace();
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_open_pdf), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Sets the fullscreen of the view.
+     *
+     * @param enable
+     */
+    private void setFullscreen(boolean enable) {
+
+        WindowManager.LayoutParams attrs = getWindow().getAttributes();
+        ActionBar actionBar = getSupportActionBar();
+
+        if (enable) {
+
+            // https://docs.oracle.com/javase/tutorial/java/nutsandbolts/op3.html
+            attrs.flags ^= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+            getWindow().setAttributes(attrs);
+            actionBar.hide();
+
+        } else {
+
+            attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
+            getWindow().setAttributes(attrs);
+            actionBar.show();
         }
     }
 }

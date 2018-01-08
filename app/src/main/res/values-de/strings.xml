@@ -15,7 +15,8 @@
     <string name="app_under_title">Darstellung eines Öffentliche Verkehrsmittel Tickets</string>
     <string name="dialog_version">Version</string>
     <string name="dialog_developer">Entwicklung</string>
-    <string name="app_version">1.1 (30.11.2016)</string>
+    <string name="app_version">1.2 (08.01.2018)</string>
     <string name="navigation_drawer_close">Schließe Navigation</string>
     <string name="navigation_drawer_open">Öffne Navigation</string>
+    <string name="menu_open_pdf">Pdf-Datei öffnen</string>
 </resources>

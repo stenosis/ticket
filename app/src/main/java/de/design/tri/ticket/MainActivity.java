@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         // Restore the main image
         if (doesFileExists(FILE_TICKET_IMAGE)) {
             receiveMainImageFromInternalStorage();
@@ -104,16 +105,7 @@ public class MainActivity extends AppCompatActivity
         // Deactivate the sidebar menu
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-//        drawer.setDrawerListener(toggle);
-//        toggle.syncState();
-
-//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-//        navigationView.setNavigationItemSelectedListener(this);
-
     }
-
 
     /**
      * Saving the State
@@ -152,10 +144,13 @@ public class MainActivity extends AppCompatActivity
      * @return
      */
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onPrepareOptionsMenu(Menu menu) {
 
+        menu.clear();
         getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+        if (doesFileExists(FILE_TICKET_IMAGE)) menu.add(getString(R.string.menu_open_pdf));
+
+        return super.onPrepareOptionsMenu(menu);
     }
 
     /**
@@ -171,6 +166,10 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_about) {
 
             displayAboutDialog();
+            return true;
+        } else if (item.getTitle().equals(getText(R.string.menu_open_pdf))) {
+
+            openPdfFile();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -209,13 +208,24 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * Open up my Twitter homepage.
+     * Opens up my Twitter homepage.
      *
      * @param v
      */
     public void openCredits(View v) {
 
         String url = "https://twitter.com/stenosis101";
+        openHomepage(Uri.parse(url));
+    }
+
+    /**
+     * Opens up the GitHub project site of the Ticket project.
+     *
+     * @param v
+     */
+    public void openGitHub(View v) {
+
+        String url = "https://github.com/stenosis/Ticket";
         openHomepage(Uri.parse(url));
     }
 
@@ -261,6 +271,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+
     /**
      * Starts the file manager to select a file from the external storage.
      */
@@ -279,7 +290,6 @@ public class MainActivity extends AppCompatActivity
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         REQUEST_CODE_FILE_PERMISSION);
-
             }
         } else {
 
@@ -316,13 +326,14 @@ public class MainActivity extends AppCompatActivity
 
             image.setImageBitmap(bitmap);
             image.invalidate();
+            increaseScreenBrightness();
 
             // Hide the information default text
             TextView txt = (TextView) findViewById(R.id.txt_choose_ticket);
             txt.setVisibility(View.INVISIBLE);
 
-
             image.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View view) {
 
@@ -372,12 +383,12 @@ public class MainActivity extends AppCompatActivity
                 selectFileFromExternalStorage();
             }
 
-            } else {
+        } else {
 
-                Toast.makeText(this, getResources().getString(R.string.error_permission),
-                        Toast.LENGTH_SHORT).show();
-                selectFileFromExternalStorage();
-            }
+            Toast.makeText(this, getResources().getString(R.string.error_permission),
+                    Toast.LENGTH_SHORT).show();
+            selectFileFromExternalStorage();
+        }
     }
 
     /**
@@ -389,7 +400,6 @@ public class MainActivity extends AppCompatActivity
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
 
         /***
          *CROP IMAGE RESULT
@@ -576,6 +586,7 @@ public class MainActivity extends AppCompatActivity
         // And display the image
         this.mainImage = bmp;
         setFrontImage(bmp);
+
     }
 
     /**
@@ -626,5 +637,15 @@ public class MainActivity extends AppCompatActivity
             getWindow().setAttributes(attrs);
             actionBar.show();
         }
+    }
+
+    /**
+     * Increases the screen brightness of the app.
+     */
+    private void increaseScreenBrightness() {
+
+        WindowManager.LayoutParams layout = getWindow().getAttributes();
+        layout.screenBrightness = 1F;
+        getWindow().setAttributes(layout);
     }
 }

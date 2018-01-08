@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Ticket</string>
     <string name="app_under_title">Display public transport ticket</string>
-    <string name="app_version">1.1 (11.30.2016)</string>
+    <string name="app_version">1.2 (08.01.2018)</string>
     <string name="app_licence">This App is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.</string>
     <string name="app_foss">Ticket uses following libraries:\n\n• NoNonsense-FilePicker\nMozilla Public License Version 2.0\nhttps://github.com/spacecowboy/NoNonsense-FilePicker/blob/master/LICENSE\n\n• ImageCropper\nApache License, Version 2.0\nhttps://github.com/ArthurHub/Android-Image-Cropper\n\n• Pdfium\nApache License, Version 2.0\nhttps://github.com/barteksc/PdfiumAndroid"</string>
 
@@ -25,4 +25,6 @@
 
     <string name="dialog_version">Version</string>
     <string name="dialog_developer">Developed by</string>
+
+    <string name="menu_open_pdf">Open Pdf file</string>
 </resources>
